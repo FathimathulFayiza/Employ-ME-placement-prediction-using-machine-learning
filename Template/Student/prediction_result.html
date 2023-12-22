@@ -1,0 +1,29 @@
+{% extends 'Student/StudentNav.html' %}
+{% block content %}
+{% load static %}
+
+<div class="card bg-light container mt-5">
+    <div class="card-body">
+        <div class=" bootstrap snippets bootdey">
+            <div class="panel-body inf-content">
+                <div class="text-center my-4 py-5">
+                    <h3 class="mb-4">Prediction Result</h3>
+                    {% for company in result_list %}
+                        {% if company == "None" %}
+                        <p class="text-primary"><b>You are not eligible to any company, try hard!!</b></p>
+                        {% else %}
+                        <p class="text-primary"><b>{{company}}</b></p>
+                        {% endif %}
+                    {% endfor %}
+
+                    <div class="mt-5 text-end">
+                        <a href="/improveskill/" class="btn btn-info">Improve Skill</a>
+                        <a href="/aboutcampus/" class="btn btn-outline-info">About Company</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,169 @@
+{% extends 'College/Navigation.html' %}
+{% block content %}
+{% load static %}
+
+<div class="container mt-5">
+    <form  method="post" action="/SavePerformance/" enctype="multipart/form-data">
+        {% csrf_token %}
+
+    <div class="card">
+        <div class="container  mt-4">
+            <a class="btn text-white  float-right " style="background-color: #8f02fa" type="button" href="/UpdateRequests/"
+                >Update Requests
+                <span class="badge badge-primary badge-pill">{{Flag}}</span></a>
+        </div>
+        <div class="card-body">
+           
+            <div class="container mb-4 ">
+                <h3 class="text-center" id="exampleModalLabel">Add Performance</h3>
+            </div>
+            <div class="row">
+                <div class="col-md">
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>Student Name</b></label>
+                        <select id="jobid" name="name" id="name" class="form-control " required
+                        oninvalid="this.setCustomValidity('Select the Student')"
+                        oninput="setCustomValidity('')"
+                        >
+                        <option value="">--Select--</option>
+                        {% for Students in Student%}
+                        <option value="{{Students.id}}">{{Students.name}}</option>
+                        {% endfor %}
+
+                    </select>
+
+                    </div>
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>SSLC</b></label>
+                        <input type="text" class="form-control " id="sslc" name="sslc"
+                            placeholder="SSLC" required
+                            oninvalid="this.setCustomValidity('Provide SSLC marks')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>DEPLOMA</b></label>
+                        <input type="text" class="form-control " id="deploma" name="deploma"
+                            placeholder="DEPLOMA" required
+                            oninvalid="this.setCustomValidity('Provide DEPLOMA marks')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>Number Of Backlogs</b></label>
+                        <input type="text" class="form-control " id="Backlogs" name="Backlogs"
+                            placeholder="Number Of Backlogs" required
+                            oninvalid="this.setCustomValidity('Provide Number Of Backlogs')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>APTITUDE</b></label>
+                        <input type="text" class="form-control " id="APTITUDE" name="APTITUDE"
+                            placeholder="APTITUDE" required
+                            oninvalid="this.setCustomValidity('Provide APTITUDE')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>QUANTITATIVE</b></label>
+                        <input type="text" class="form-control " id="QUANTITATIVE" name="QUANTITATIVE"
+                            placeholder="QUANTITATIVE" required
+                            oninvalid="this.setCustomValidity('Provide QUANTITATIVE')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>ANALYTICAL</b></label>
+                        <input type="text" class="form-control " id="ANALYTICAL" name="ANALYTICAL"
+                            placeholder="ANALYTICAL" required
+                            oninvalid="this.setCustomValidity('Provide ANALYTICAL')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>DOMAIN</b></label>
+                        <input type="text" class="form-control " id="DOMAIN" name="DOMAIN"
+                            placeholder="DOMAIN" required
+                            oninvalid="this.setCustomValidity('Provide DOMAIN')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                  
+                   
+                </div>
+                <div class="col-md">
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>PUC</b></label>
+                        <input type="text" class="form-control " id="puc" name="puc"
+                            placeholder="PUC" required
+                            oninvalid="this.setCustomValidity('Provide PUC marks')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>BE CGPA</b></label>
+                        <input type="text" class="form-control " id="becgpa" name="becgpa"
+                            placeholder="BE CGPA" required
+                            oninvalid="this.setCustomValidity('Provide BE CGPA')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                        <label for="inputName"><b>BE PERCENTAGE</b></label>
+                        <input type="text" class="form-control " id="BE_PERCENTAGE" name="BE_PERCENTAGE"
+                            placeholder="BE PERCENTAGE" required
+                            oninvalid="this.setCustomValidity('Provide BE PERCENTAGE')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                
+                        <label for="inputName"><b>Total Score Of Cocubes</b></label>
+                        <input type="text" class="form-control " id="Cocubes" name="Cocubes"
+                            placeholder="Total Score Of Cocubes" required
+                            oninvalid="this.setCustomValidity('Provide Total Score Of Cocubes')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    
+                    <div class="form-group mx-2">
+                
+                        <label for="inputName"><b>ENGLISH</b></label>
+                        <input type="text" class="form-control " id="ENGLISH" name="ENGLISH"
+                            placeholder="ENGLISH" required
+                            oninvalid="this.setCustomValidity('Provide ENGLISH')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                
+                        <label for="inputName"><b>COMPUTER FUNDAMENTALS</b></label>
+                        <input type="text" class="form-control " id="Computer" name="Computer"
+                            placeholder="COMPUTER FUNDAMENTALS" required
+                            oninvalid="this.setCustomValidity('Provide COMPUTER FUNDAMENTALS')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                
+                        <label for="inputName"><b>CODING</b></label>
+                        <input type="text" class="form-control " id="CODING" name="CODING"
+                            placeholder="CODING" required
+                            oninvalid="this.setCustomValidity('Provide CODING')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    <div class="form-group mx-2">
+                
+                        <label for="inputName"><b>WRITTEN ENGLISH</b></label>
+                        <input type="text" class="form-control " id="writtenEnglish" name="writtenEnglish"
+                            placeholder="WRITTEN ENGLISH" required
+                            oninvalid="this.setCustomValidity('Provide WRITTEN ENGLISH')"
+                            oninput="setCustomValidity('')">
+                    </div>
+                    
+
+                </div>
+            </div>
+            <div class="container text-center mt-4">
+                <button class="btn text-white mb-2 w-100" style="background-color: #8f02fa" type="submit"
+                    >Save</button>
+            </div>
+
+        </div>
+       
+    </div>
+    </form>
+</div>
+
+
+
+
+{% endblock %}

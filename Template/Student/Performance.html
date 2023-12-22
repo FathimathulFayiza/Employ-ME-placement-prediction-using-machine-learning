@@ -1,0 +1,137 @@
+{% extends 'Student/StudentNav.html' %}
+{% block content %}
+{% load static %}
+
+<div class="card bg-light container mt-5">
+
+    <div class="card-body">
+        <div class=" bootstrap snippets bootdey">
+            <div class="panel-body inf-content">
+                <div class="text-center my-4">
+                    <strong>
+                        <h3><b>Performance</b></h3>
+                    </strong><br>
+                </div>
+                <div class="row mx-2 mb-4">
+                    {% for data in performance_list %}
+                    <div class="col-4">
+                        <label class="font-weight-bold mb-2">{{data.title}}</label>
+                        <div class="input-group mb-3">
+                            <input 
+                                type="text" class="form-control mr-1" 
+                                value="{{data.value}}" id="INP_{{data.key}}"
+                                aria-describedby="button-addon"
+                                {% if data.isEdit == 0 or is_final_student == 1 %} disabled {% endif %}
+                            >
+                            <button
+                                class="btn btn-success mr-1" type="button"
+                                id="BTN_{{data.key}}"
+                                {% if data.isEdit == 0 or is_final_student == 1 %}
+                                style="display: none;"
+                                {% endif %}
+                                onclick="Save('{{student_id}}', '{{data.title}}', '{{data.key}}');"
+                            >
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
+                                    <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"/>
+                                </svg>
+                            </button>
+                            {% if data.isEdit == 0 or is_final_student == 1 %}
+                            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#requestUpdateModal{{forloop.counter}}">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil p-0 m-0" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg>
+                            </button>
+                            <!-- Modal -->
+                            <div class="modal fade" id="requestUpdateModal{{forloop.counter}}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Update Request</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <h6 class="mb-3">Current <b>{{data.title}}</b> value is <b>{{data.value}}</b></h6>
+                                        <div class="input-group mb-3">
+                                            <input type="text" class="form-control mr-1" aria-describedby="button-request" id="MDLINP_{{data.key}}" />
+                                            <button class="btn btn-primary" type="button" id="button-request" onclick="Update('{{student_id}}', '{{data.title}}', '{{data.key}}', 'MDLINP_{{data.key}}');">Request</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+                            <!-- <button class="btn btn-info" type="button" id="button-addon" onclick="Update('{{student_id}}', '{{data.title}}', '{{data.key}}');">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pencil p-0 m-0" viewBox="0 0 16 16">
+                                    <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                </svg>
+                            </button> -->
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                    <div class="col-12 mt-4">
+                        <a href="/prediction/{{student_id}}" class="btn btn-primary mx-auto">
+                            Prediction
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+    integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+<script>
+    function Update(id, field, key, value_id) {
+        var mdl_input = $('#'+value_id).val();
+        $.ajax({
+            type: "POST",
+            url: "/PerformUpdateRequest/",
+            data: { id: id, Field: field, field_key: key, field_value: mdl_input },
+            success: function (result) {
+                // alert(result)
+                if (result == 'Please Contact admin') {
+                    Swal.fire(
+                        'Opps..!',
+                        result,
+                        'error'
+                    )
+                } else {
+                    Swal.fire(
+                        'Success!',
+                        result,
+                        'success'
+                    )
+                }
+            },
+        });
+    }
+</script>
+
+<script>
+    function Save(id, field, key) {
+        var value = $('#INP_'+key).val();
+        $.ajax({
+            type: "POST",
+            url: "/UpdatePerform/",
+            data: { id: id, Field: field, val: value, key: key },
+            success: function (result) {
+                $("#BTN_"+key).hide();
+                $('#INP_'+key).prop('disabled', true);
+                Swal.fire(
+                    'Success!',
+                    'Successfully Updated',
+                    'success'
+                )
+
+                window.location.href = "/StudentPerformance/";
+
+            },
+        });
+    }
+</script>
+
+{% endblock %}

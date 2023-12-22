@@ -1,0 +1,95 @@
+{% extends 'College/Navigation.html' %}
+{% block content %}
+{% load static %}
+
+<form class="container mt-5">
+    <div class="card bg-light ">
+
+        <div class="card-body">
+
+            <div class="form-group">
+                <table class="table  table-striped table-hover ">
+                    <thead>
+                        <tr>
+                            <th scope=col>#</th>
+                            <th scope=col>Student Name</th>
+                            <th scope=col>Phone Number</th>
+                            <th scope=col>Branch</th>
+                            <th scope=col>Field</th>
+                            <th scope=col>Request Value</th>
+                            <th scope=col>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        {% if not Performance%}
+                        <tr>
+                            <td colspan="8" class="text-center text-danger">
+                                No Record Found
+                            </td>
+                        </tr>
+
+                        {%else%}
+                        {% for perform in Performance %}
+
+                        <tr>
+                            <td>{{forloop.counter}}</td>
+
+                            <!-- <td> <img src="/PlayersImage/Player-7032391352.jpg"></td> -->
+
+                            <td>{{perform.name}}</td>
+
+                            <td>{{perform.contact}}</td>
+                            <td>{{perform.Branch}}</td>
+                            <td>{{perform.Field}}</td>
+                            <td>{{perform.field_value}}</td>
+                            <td>
+                                <p> <button type="button" id="button" 
+                                    onclick="change('{{perform.student_id}}', '{{perform.id}}', '{{perform.Field}}', '{{perform.field_key}}', '{{perform.field_value}}');" class="btn btn-success">Approve</button></p>
+                            </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                    {% endif %}
+                </table>
+            </div>
+        </div>
+    </div>
+
+</form>
+
+<script type="text/javascript">
+    function change(student_id, perform_id, field, key, value) {
+        Swal.fire({
+            title: 'Are you sure?',
+            showDenyButton: true,
+            showCancelButton: false,
+            confirmButtonText: 'Yes',
+            denyButtonText: 'No',
+        }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    type: "POST",
+                    url: "/ApproveRequest/",
+                    data: {
+                        student_id: student_id,
+                        perform_id: perform_id,
+                        field: field,
+                        key: key,
+                        value: value,
+                    },
+                    timeout: 10000,
+                    success: function () {
+                        window.location.href = "/UpdateRequests/";
+                    }
+                });
+            } else if (result.isDenied) {
+            }
+        })
+
+    }
+</script>
+
+
+{% endblock %}

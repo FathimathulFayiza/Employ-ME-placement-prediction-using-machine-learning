@@ -1,0 +1,371 @@
+{% extends 'Student/StudentNav.html' %}
+{% block content %}
+{% load static %}
+
+<div class="card bg-light container mt-5">
+
+    <div class="card-body">
+        <div class=" bootstrap snippets bootdey">
+            <div class="panel-body inf-content">
+                {% for student in Student %}
+                <div class="text-center my-4">
+                    <strong>
+                        <h3><b>{{student.name}}</b></h3>
+                    </strong><br>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 mt-1 ml-2">
+                        <!-- <div class="mt-5"></div> -->
+
+                        <img alt="" style="width:600px;" title="" class="img-circle img-thumbnail isTooltip"
+                            src="/media/Student/{{student.Image}}" data-original-title="Usuario">
+
+                        <div class="container text-center mt-4 ">
+                            <button type="button" id="Update" onclick="update('{{student.id}}');" value="{{student.id}}"
+                                class="btn btn-warning w-25 ">Edit
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-7">
+
+
+                        <div class="table-responsive">
+                            <table class="table table-user-information">
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-asterisk text-primary"></span>
+                                                USN
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{student.username}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-user  text-primary"></span>
+                                                Phone Number
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{student.contact}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-cloud text-primary"></span>
+                                                Email
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{student.email}}
+                                        </td>
+                                    </tr>
+
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-bookmark text-primary"></span>
+                                                Age
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{student.age}}
+                                        </td>
+                                    </tr>
+
+
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-eye-open text-primary"></span>
+                                                Gender
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{student.gender}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-envelope text-primary"></span>
+                                                Father Name
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{student.fatherName}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Address
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{student.address}} </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Branch
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{student.branch}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Semister
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{student.Semister}} Semister
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <strong>
+                                                <span class="glyphicon glyphicon-calendar text-primary"></span>
+                                                Year
+                                            </strong>
+                                        </td>
+                                        <td class="text-primary">
+                                            {{student.year}}
+                                        </td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+</div>
+
+<form method="post" action="/updateAccount/" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+                <div class="modal-header ">
+                    <div class="container">
+                        <h3 class="text-center" id="exampleModalLabel">Edit</h3>
+                    </div>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <input type="text" id="id" name="id" hidden>
+                    <input type="text" id="img" name="img" hidden>
+                    <div class="row">
+                        <div class="col-md mx-2">
+                            <div class="form-group mx-2">
+                                <label for="inputName"><b>Name</b></label>
+                                <input type="text" class="form-control " id="name" name="name"
+                                    placeholder="Student Name" required
+                                    oninvalid="this.setCustomValidity('Provide Student Name')"
+                                    oninput="setCustomValidity('')">
+                            </div>
+
+                            <div class="form-group mx-2">
+                                <label for="inputPhone"><b>Phone Number</b></label>
+                                <input type="tel" class="form-control" id="phone" pattern="[0-9]{10}" name="phone"
+                                    placeholder="Phone Number" required
+                                    oninvalid="this.setCustomValidity('Provide valid Phone Number')"
+                                    oninput="setCustomValidity('')">
+                            </div>
+                            <div class="form-group mx-2">
+
+                                <label for="inputaddress"><b>Age</b></label>
+                                <input type="number" class="form-control " id="age" name="age" placeholder="Age"
+                                    required oninvalid="this.setCustomValidity('Provide Player Age')"
+                                    oninput="setCustomValidity('')">
+
+
+                            </div>
+                            <div class="form-group mx-2">
+                                <label for="inputaddress"><b>Gender</b></label>
+                                <select class="form-control" id="gender" name="gender" required
+                                    oninvalid="this.setCustomValidity('Select Student gender')"
+                                    oninput="setCustomValidity('')">
+                                    <option value="">--Select--</option>
+                                    <option value="Male">Male </option>
+                                    <option value="Female">Female</option>
+                                    <option value="Other">Other</option>
+
+
+                                </select>
+                            </div>
+                            <div class="form-group mx-2">
+                                <label for="inputName"><b>Year</b></label>
+                                <input type="year" class="form-control " id="year" name="year" placeholder="Year"
+                                    required oninvalid="this.setCustomValidity('Provide Student Academic year')"
+                                    oninput="setCustomValidity('')">
+                            </div>
+                            <div class="form-group mx-2">
+
+                                <label for="inputaddress"><b>Address</b></label>
+                                <textarea class="form-control" id="address" name="address" placeholder="Address"
+                                    rows="3" required oninvalid="this.setCustomValidity('Provide Student Address')"
+                                    oninput="setCustomValidity('')"></textarea>
+
+                                <br>
+
+
+                            </div>
+
+                           
+                        </div>
+                        <div class="col-md mx-2">
+                            <div class="form-group mx-2">
+                                <label for="inputName"><b>USN</b></label>
+                                <input type="text" class="form-control " id="username" name="username"
+                                    placeholder="Username" required readonly
+                                    oninvalid="this.setCustomValidity('Provide Student Username')"
+                                    oninput="setCustomValidity('')">
+                            </div>
+                            <div class="form-group mx-2">
+                                <label for="inputemail"><b>Email</b></label>
+                                <input type="email" class="form-control" id="email"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$" name="email" placeholder="Email"
+                                    required oninvalid="this.setCustomValidity('Provide valid Email')"
+                                    oninput="setCustomValidity('')">
+
+                            </div>
+
+                            <div class="form-group mx-2">
+                                <label for="inputName"><b>Father Name</b></label>
+                                <input type="text" class="form-control " id="fathername" name="fathername"
+                                    placeholder="Father Name" required
+                                    oninvalid="this.setCustomValidity('Provide Student Father Name')"
+                                    oninput="setCustomValidity('')">
+                            </div>
+                            <div class="form-group mx-2">
+                                <label for="inputaddress"><b>Branch</b></label>
+
+                                <select class="form-control" id="branch" name="branch" required
+                                    oninvalid="this.setCustomValidity('Select Student branch')"
+                                    oninput="setCustomValidity('')">
+                                    <option value="">--Select--</option>
+                                    <option value="Computer Science">Computer Science </option>
+                                    <option value="Electronics">Electronics</option>
+                                    <option value="Civil">Civil</option>
+                                    <option value="Mechanical">Mechanical</option>
+                                    <option value="Marine">Marine</option>
+                                    <option value="Automobile">Automobile</option>
+                                    <option value="Information Science">Information Science</option>
+                                    <option value="Aeronautical">Aeronautical</option>
+                                </select>
+                            </div>
+                            <div class="form-group mx-2">
+                                <label for="inputaddress"><b>Semister</b></label>
+
+                                <select class="form-control" id="sem" name="sem" required
+                                    oninvalid="this.setCustomValidity('Select Student Semister')"
+                                    oninput="setCustomValidity('')">
+                                    <option value="">--Select--</option>
+                                    <option value="1">1 </option>
+                                    <option value="2">2</option>
+                                    <option value="3">3</option>
+                                    <option value="4">4</option>
+                                    <option value="5">5</option>
+                                    <option value="6">6</option>
+                                    <option value="7">7</option>
+                                    <option value="8">8</option>
+                                </select>
+                            </div><br>
+                            <div class="form-group mx-2">
+                                <!-- <label for="inputaddress"><b>Image</b></label> -->
+                                <img id="my_image" src="/Media/Student/" width="50" height="50"
+                                    alt="Insert link 1 alt text here" />
+
+                                <div class="custom-file">
+                                    <input type="file" class="form-control-file" id="images" name="images"
+                                    aria-describedby="fileHelpBlock" accept=".png,.jpeg,.webp,.jpg" >
+                                <small id="fileHelpBlock" class="form-text text-muted">
+                                    (ex .png,.jpeg,.webp )
+                                </small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <!-- <div class="form-group mx-2">
+                           
+    
+                        </div>
+                        <div class="form-group mx-2">
+                           
+                        </div> -->
+                </div>
+                <div class="modal-footer my-3">
+                    <button type="button" class="btn btn-secondary btn-lg" data-dismiss="modal">Close</button>
+                    <button class="btn text-white btn-lg" style="background-color:#8f02fa; width: 10%;" name="submit"
+                        type="submit">Save</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+
+<script>
+    function update(ID) {
+        $.ajax({
+            type: "GET",
+            url: "/editAccount/",
+
+            data: { id: ID },
+            success: function (result) {
+
+                console.log(result);
+                // $("#Designation").text(result[0].designation);
+                // $("#salary").text(result[0].salary);
+                // $("#place").text(result[0].place);
+                $("#name").val(result[0].name);
+                $("#username").val(result[0].username);
+                $("#phone").val(result[0].contact);
+                $("#email").val(result[0].email);
+                $("#address").val(result[0].address);
+                $("#age").val(result[0].age);
+                $("#gender").val(result[0].gender);
+                $("#id").val(result[0].id);
+                $("#year").val(result[0].year);
+                $("#fathername").val(result[0].fatherName);
+                $("#branch").val(result[0].branch);
+                $("#sem").val(result[0].Semister);
+                $("#my_image").attr("src", '/media/Student/' + result[0].Image);
+
+                $("#images").attr(result[0].Image);
+                $("#img").val(result[0].Image);
+
+                $("#exampleModal").modal("show");
+                // $('#data').show();
+                console.log(result[0]);
+                return;
+            },
+        });
+    }
+</script>
+
+
+
+
+{% endblock %}
